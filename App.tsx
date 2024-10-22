@@ -93,10 +93,16 @@ const App = () => {
 
   const handleSwipe = (gestureState) => {
     const { dx, dy } = gestureState;
+
+    // Ensure the snake doesn't reverse direction
     if (Math.abs(dx) > Math.abs(dy)) {
-      setDirection({ x: dx > 0 ? boxSize : -boxSize, y: 0 });
+      if (direction.x === 0) { // Can only turn left/right if not moving up/down
+        setDirection({ x: dx > 0 ? boxSize : -boxSize, y: 0 });
+      }
     } else {
-      setDirection({ x: 0, y: dy > 0 ? boxSize : -boxSize });
+      if (direction.y === 0) { // Can only turn up/down if not moving left/right
+        setDirection({ x: 0, y: dy > 0 ? boxSize : -boxSize });
+      }
     }
   };
 
